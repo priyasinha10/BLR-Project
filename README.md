@@ -8,6 +8,7 @@ Django
 Django Rest Framework
 SQLite 
 
+Ubuntu :  
 
 git clone https://github.com/priyasinha10/BLR-Project.git
 virtualenv env --python=3.10
@@ -102,4 +103,8 @@ python manage.py runserver
 6) The calculated fare will be displayed on the page.
 
 <img width="960" alt="image" src="https://github.com/priyasinha10/BLR-Project/assets/91273459/18421ea0-c736-4b91-9d16-ba818e9ef720">
+<img width="960" alt="image" src="https://github.com/priyasinha10/BLR-Project/assets/91273459/bba68de5-e744-44de-bd32-500453695f91">
+<img width="960" alt="image" src="https://github.com/priyasinha10/BLR-Project/assets/91273459/60c0ccac-99c5-4efa-b2dc-402340ba8042">
+
+
 
