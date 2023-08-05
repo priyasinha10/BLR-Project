@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BLR Metro Fare Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        #journeyForm {
+            border: 1px solid #ccc;
+            padding: 20px;
+            background-color: #fff;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="datetime-local"],
+        input[type="number"] {
+            padding: 8px;
+            margin-bottom: 15px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="button"] {
+            margin-right: 10px;
+            background-color: #f0ad4e;
+        }
+
+        button[type="button"]:hover,
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #journeyList {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            font-weight: bold;
+        }
+
+        #fare {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>BLR Metro Fare Calculator</h1>
+    <form id="journeyForm">
+        <label for="datetime">Date & Time:</label>
+        <input type="datetime-local" id="datetime" name="datetime" required step="60">
+        <br>
+        <label for="fromZone">From Zone:</label>
+        <input type="number" id="fromZone" name="fromZone" min="1" max="2" required>
+        <br>
+        <label for="toZone">To Zone:</label>
+        <input type="number" id="toZone" name="toZone" min="1" max="2" required>
+        <br>
+        <button type="button" onclick="addJourney()">Add Journey</button>
+        <button type="button" onclick="calculateFare()">Calculate Fare</button>
+        <button type="button" onclick="clearForm()">Clear</button> <!-- New Clear Button -->
+
+    </form>
+    <div id="journeyList">Journey Date Time :</div>
+    <div id="journeydetail"></div>
+
+    <div id="fare">Fare Calculated :</div>
+    <div id="fareResult"></div>
+
+
+    <script>
+        const apiBaseUrl = window.location.origin + '/api';
+        const journeys = [];
+
+        function addJourney() {
+            const datetime = document.getElementById("datetime").value;
+            const fromZone = parseInt(document.getElementById("fromZone").value);
+            const toZone = parseInt(document.getElementById("toZone").value);
+
+            if (![1, 2].includes(fromZone) || ![1, 2].includes(toZone)) {
+                alert("Invalid zone values. Only 1 and 2 are allowed as zone values.");
+                return;
+            }
+
+            journeys.push({ datetime, fromZone, toZone });
+
+            const journeydetail = document.getElementById("journeydetail");
+            journeydetail.innerHTML += `<p>DateTime: ${datetime}, From Zone: ${fromZone}, To Zone: ${toZone}</p>`;
+        }
+
+        async function calculateFare() {
+            const response = await fetch(apiBaseUrl + "/calculate_fare/", 
+            { 
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ journeys }),
+            });
+            const data = await response.json();
+            const fareResult = document.getElementById("fareResult");
+            fareResult.innerHTML = `<h2>Fare: ${data.fare}</h2>`;
+        }
+
+
+    function clearForm() {
+            journeys.length = 0; 
+            document.getElementById("journeyForm").reset(); 
+            const journeyList = document.getElementById("journeydetail");
+            journeyList.innerHTML = "";
+            const fareResult = document.getElementById("fareResult");
+            fareResult.innerHTML = "";
+        }
+        
+    </script>
+</body>
+</html>
+
