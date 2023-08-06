@@ -130,6 +130,10 @@
                 body: JSON.stringify({ journeys }),
             });
             const data = await response.json();
+            if ('error' in data) {
+                alert(data.error);
+                return;
+            }
             const fareResult = document.getElementById("fareResult");
             fareResult.innerHTML = `<h2>Fare: ${data.fare}</h2>`;
         }
