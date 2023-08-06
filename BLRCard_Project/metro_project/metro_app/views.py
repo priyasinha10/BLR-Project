@@ -23,6 +23,8 @@ def calculate_fare_api(request):
             dt_obj = datetime.strptime(datetime_str, '%Y-%m-%dT%H:%M')
             # strftime() -- Convert the datetime object back to a formatted string
             journey['datetime'] = dt_obj.strftime('%Y-%m-%d %H:%M')
+        else:
+            return Response({'error': "Please provide the datetime for all journeys."})
 
     fare = calculate_fare(journeys)
     return Response({'fare': fare})
