@@ -11,8 +11,15 @@ SQLite
 Ubuntu :  
 
 git clone https://github.com/priyasinha10/BLR-Project.git
+
 virtualenv env --python=3.10
+
 pip install django
+
+cd BLRCard_Project/metro_project
+
+pip install -r requirements.txt
+
 python manage.py runserver
 
 
