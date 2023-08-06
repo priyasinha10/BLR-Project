@@ -97,7 +97,7 @@ Start the development server:
 
 python manage.py runserver
 
-1) Access the BLR Metro Fare Calculator web application at http://localhost:8000/.
+1) Access the BLR Metro Fare Calculator web application at http://127.0.0.1:8000/api/fare_calculator/.
 
 2) Enter the journey details in the form, including date and time, and the from and to zones.
 
